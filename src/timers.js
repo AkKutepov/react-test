@@ -11,7 +11,7 @@ export default class extends React.Component {
     }
 
     this.state = {
-      dS: { isEnabled: 0, timer: 0 },
+      dS: { isEnabled: 0, processId: 0 },
       dT: [],
     }
 
@@ -40,7 +40,7 @@ console.log(this.name + ' mount')
       SELF.setState((prevState, prevProps) => { 
         return { dS: { 
           isEnabled: (!!s0 && s0 == s1 && !!s1.replace(/[:0]+/, '')), 
-          timer: prevState.dS.timer 
+          processId: prevState.dS.processId 
         }}
       })
     },
@@ -65,7 +65,7 @@ console.log(this.name + ' mount')
         
         SELF.state.dT.push(ar_T) // add new timer
         OBJ.input.select() // focus, select to inputbox
-        if(SELF.state.dS.timer == 0) M.startTimers() // start all timers if idle
+        if(SELF.state.dS.processId == 0) M.startTimers() // start all timers if idle
       }
     },
     
@@ -77,45 +77,43 @@ console.log(this.name + ' mount')
     
     // start all timers
     startTimers() {
-      var timer = setInterval(() => {
-        var i, 
-            diff, // remaining time of the current timer
-            now = new Date(), // current time
-            ar = SELF.state.dT,
-            activeCount = ar.length // count of active timers
+      var diff, // remaining time of the current timer
+          now, // current time
+          activeCount, // count of active timers
+          pad = this.pad, // formating
+          ar // temp state array
+      var processId = setInterval(() => {
+        
+        now = new Date()
+        ar = SELF.state.dT
+        activeCount = ar.length
 
-        for(i = ar.length; i--;) {
-          diff = new Date(ar[i].stop - now.getTime());  
+        SELF.state.dT.map(timer => {
+          diff = new Date(timer.stop - now.getTime())
           
           if(diff > 0) {
           // active
-            ar[i].m = this.pad(diff.getMinutes()) // min
-            ar[i].s = this.pad(diff.getSeconds()) // sec
-            ar[i].ms = this.pad(diff.getMilliseconds(), 3) // msec
+            Object.assign(timer, { m: pad(diff.getMinutes()), s: pad(diff.getSeconds()), ms: pad(diff.getMilliseconds(), 3) })
           }
           else {
           // deactive
-            if(!ar[i].stopTime) {
+            if(!timer.stopTime) {
             // stop moment
-              ar[i].m =
-              ar[i].s = '00'
-              ar[i].ms = '000'
-              
-              ar[i].stopTime = ' - ' + this.pad(now.getHours()) + ':' + 
-                this.pad(now.getMinutes()) + ':' + this.pad(now.getSeconds()) // view stop time
+              Object.assign(timer, { ms: '000', stopTime: ' - ' + pad(now.getHours()) + ':' + 
+                pad(now.getMinutes()) + ':' + pad(now.getSeconds()) })
             }
-            else activeCount--
+            
+            if(--activeCount == 0) { clearInterval(SELF.state.dS.processId); SELF.state.dS.processId = 0 } // idle mode
           }
-        }
+        })
         SELF.setState({ dT: ar })
-
-        if(activeCount == 0) { clearInterval(SELF.state.dS.timer); SELF.state.dS.timer = 0 } // idle mode        
+        
       }, 10)
       
       SELF.setState((prevState, prevProps) => { 
         return { dS: { 
           isEnabled: prevState.dS.isEnabled, 
-          timer: timer 
+          processId: processId 
         }}
       })
     },
