@@ -63,12 +63,10 @@ class weather extends React.Component {
   methods = {
     refreshData() {
       var ar, s = localStorage.getItem('trWeather') || '[]'
-      if(s != '[]') {
-        ar = JSON.parse(s).map(item => item.name + ', ' + item.country)
-        M.getWeather(ar)
-        return 1
-      }
-      return 0
+      if(s == '[]') s = '[{"name":"Havana","country":"CU"},{"name":"Dubai","country":"AE"}]'
+      ar = JSON.parse(s).map(item => item.name + ', ' + item.country)
+      M.getWeather(ar)
+      return 1
     },
     settingMode() {
       SELF.setState({ data_SettingVisible: !SELF.state.data_SettingVisible })

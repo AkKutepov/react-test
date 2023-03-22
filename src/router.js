@@ -2,13 +2,14 @@ import { Lib } from "./lib.js"
 import Home from "./home.js"
 import Share from "./share.js"
 import Timers from "./timers.js"
+import Cities from "./cities.js"
 import { Offset } from "./offset.js"
 
 // routes
 export const routes = [
   { name: 'Weather', path: '/', exact: true, component: Home },
   { name: 'Timers', path: '/timers', component: Timers, },
-  { name: 'Contacts', path: '/contacts', component: Share },
+  { name: 'Cities', path: '/cities', component: Cities },
   { name: 'Offset', path: '/offset', component: Offset },
   { name: 'Dropdown', path: '/dropdown' },
   { name: 'Action',  path: '/', exact: true, component: Share, child: 1, },
