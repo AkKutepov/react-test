@@ -41,21 +41,21 @@ export default class extends React.Component {
     init() {
       var text = OBJ.input
       function resize () {
-        OBJ.input.style.height = 'auto';
-        OBJ.input.style.height = OBJ.input.scrollHeight + 'px';
+        OBJ.input.style.height = 'auto'
+        OBJ.input.style.height = OBJ.input.scrollHeight + 'px'
       }
       /* 0-timeout to get the already changed text */
       function delayedResize () {
-        window.setTimeout(resize, 0);
+        window.setTimeout(resize, 0)
       }
-      SELF.observe(text, 'change',  resize);
-      SELF.observe(text, 'cut',     delayedResize);
-      SELF.observe(text, 'paste',   delayedResize);
-      SELF.observe(text, 'drop',    delayedResize);
-      SELF.observe(text, 'keydown', delayedResize);
-      // text.focus();
-      // text.select();
-      resize();
+      SELF.observe(text, 'change',  resize)
+      SELF.observe(text, 'cut',     delayedResize)
+      SELF.observe(text, 'paste',   delayedResize)
+      SELF.observe(text, 'drop',    delayedResize)
+      SELF.observe(text, 'keydown', delayedResize)
+      // text.focus()
+      // text.select()
+      resize()
     },
     
     //
