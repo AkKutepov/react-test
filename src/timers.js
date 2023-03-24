@@ -49,7 +49,7 @@ console.log(this.name + ' mount')
       if(!SELF.state.dS.isEnabled) return // not allow adding timer
       
       if(event.key === 'Enter' || event.type == 'click') {
-        event.preventDefault();
+        event.preventDefault()
       
         // set new timer
         var ar = OBJ.input.value.split(':'), // [min, sec]
@@ -71,8 +71,8 @@ console.log(this.name + ' mount')
     
     // pad "0" from left (default len == 2)
     pad(val, len) {
-      len = len || 2;
-      return new Array(len - ('' + val).length + 1).join('0') + val;
+      len = len || 2
+      return new Array(len - ('' + val).length + 1).join('0') + val
     },
     
     // start all timers
