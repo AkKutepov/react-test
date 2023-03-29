@@ -11,7 +11,7 @@ export default class extends React.Component {
     }
 
     this.state = {
-      dS: { isEnabled: 0, processId: 0 },
+      dS: { isEnabled: 0, },
       dT: [],
     }
 
@@ -27,6 +27,7 @@ console.log(this.name + ' mount')
     
     OBJ.input.value = '00:00'
     OBJ.input.select()
+    OBJ.processId = 0 
   }
 
   methods = {
@@ -40,7 +41,6 @@ console.log(this.name + ' mount')
       SELF.setState((prevState, prevProps) => { 
         return { dS: { 
           isEnabled: (!!s0 && s0 == s1 && !!s1.replace(/[:0]+/, '')), 
-          processId: prevState.dS.processId 
         }}
       })
     },
@@ -65,7 +65,7 @@ console.log(this.name + ' mount')
         
         SELF.state.dT.push(ar_T) // add new timer
         OBJ.input.select() // focus, select to inputbox
-        if(SELF.state.dS.processId == 0) M.startTimers() // start all timers if idle
+        if(OBJ.processId == 0) M.startTimers() // start all timers if idle
       }
     },
     
@@ -82,7 +82,8 @@ console.log(this.name + ' mount')
           activeCount, // count of active timers
           pad = this.pad, // formating
           ar // temp state array
-      var processId = setInterval(() => {
+          
+      OBJ.processId = setInterval(() => {
         
         now = new Date()
         ar = SELF.state.dT
@@ -103,19 +104,13 @@ console.log(this.name + ' mount')
                 pad(now.getMinutes()) + ':' + pad(now.getSeconds()) })
             }
             
-            if(--activeCount == 0) { clearInterval(SELF.state.dS.processId); SELF.state.dS.processId = 0 } // idle mode
+            if(--activeCount == 0) { clearInterval(OBJ.processId); OBJ.processId = 0 } // idle mode
           }
         })
         SELF.setState({ dT: ar })
         
       }, 10)
       
-      SELF.setState((prevState, prevProps) => { 
-        return { dS: { 
-          isEnabled: prevState.dS.isEnabled, 
-          processId: processId 
-        }}
-      })
     },
     
     setStyle(com, elem) {
