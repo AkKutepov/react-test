@@ -2,7 +2,7 @@ import { Lib } from "./lib.js"
 var Fragment = React.Fragment
 
 var SELF, M, AR = {}
-export class Offset extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
     SELF = this

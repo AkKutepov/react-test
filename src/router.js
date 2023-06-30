@@ -1,26 +1,18 @@
 import { Lib } from "./lib.js"
-import Home from "./home.js"
-import Share from "./share.js"
-import Timers from "./timers.js"
-import Cities from "./cities.js"
-import { Offset } from "./offset.js"
+import weatherWrapper from "./weather-wrapper.js"
+import share from "./share.js"
+import timers from "./timers.js"
+import cities from "./cities.js"
+import paginators from "./paginators.js"
 
 // routes
 export const routes = [
-  { name: 'Weather', path: '/', exact: true, component: Home },
-  { name: 'Timers', path: '/timers', component: Timers, },
-  { name: 'Cities', path: '/cities', component: Cities },
-  { name: 'Offset', path: '/offset', component: Offset },
+  { name: 'Weather', path: '/', exact: true, component: weatherWrapper },
+  { name: 'Timers', path: '/timers', component: timers, },
+  { name: 'Cities', path: '/cities', component: cities },
+  { name: 'Paginators', path: '/paginators', component: paginators, },
   { name: 'Dropdown', path: '/dropdown' },
-  { name: 'Action',  path: '/', exact: true, component: Share, child: 1, },
-  { name: 'Another action', path: '/', component: Share, child: 1, },
-  { name: 'Something else here', path: '/timers', component: Timers, child: 1, },
-  { name: 'Separated link', path: '/', component: Share, child: 1, separated: 1, },
-  { name: 'Dropdown1', path: '/dropdown1',  },
-  { name: 'Action1', path: '/', exact: true, component: Share, child: 1, },
-  { name: 'Another action1', path: '/offset', component: Offset, child: 1, },
-  { name: 'Something else here1', path: '/timers', component: Timers, child: 1, },
-  { name: 'Separated link1', path: '/', component: Share, child: 1, separated: 1, },
+  { name: 'Action',  path: '/', exact: true, component: share, child: 1, },
 ]
 
 export const service = {
