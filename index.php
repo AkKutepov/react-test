@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>React Example</title>
 
-    <!---->    
+    <!--+->    
     <link rel="stylesheet" href="./css/bootstrap.css">
     <link rel="stylesheet" href="./css/main.css">
     <!---->
@@ -22,12 +22,12 @@
   <body>
     <div id='root'></div>
 
-    <!--+->
-    <script src="./dist/com/weather.js"></script>
+    <!---->
+    <script src="./dist/weather.js"></script>
     <script src="./dist/bundle.js"></script>
     <!---->
 
-    <!---->
+    <!--+->
     <script type='module'>
       import "./src/weather.js"
       import "./src/main.js"
