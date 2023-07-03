@@ -1,1 +1,1 @@
-/var/www/html/lib/lib_sorce.js
+/var/www/html/tera/src/lib.js
