@@ -22,7 +22,7 @@ export default class extends React.Component {
   componentDidMount() {
 console.log(this.name + ' mount')
 
-    Lib.style(SELF, OBJ.div)
+    Lib.style(SELF, M.data.div, 1)
     Lib.bus.trigger('Com:mounted', M.data.path)
     
     OBJ.input.value = '00:00'
@@ -124,8 +124,8 @@ console.log(this.name + ' mount')
   render() {
 // console.log(this.name + ' render')
 
-    return Lib.elem(
-      ['div', { id:"my-timer-wrapper", ref:elem => { OBJ.div = elem } }, 
+    return Lib.reactelem(
+      ['div', { id:"my-timer-wrapper", ref:elem => { M.data.div = elem } }, 
         ['div', null, 
           ['h1', null, SELF.name],
           ['p', null, 'This is ' + SELF.name.toLowerCase() + ' page'],
@@ -218,5 +218,6 @@ console.log(this.name + ' mount')
     opacity: 1;
     pointer-events: auto;
   }
+</style>
 `
 }

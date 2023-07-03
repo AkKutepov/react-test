@@ -96,7 +96,7 @@ console.log(index, target.innerHTML);
   render() {
 console.log(SELF.name + ' render')
 
-    return Lib.elem(
+    return Lib.reactelem(
       ['div', { id:'Offset', ref:elem => { M.data.div = elem } },
         ['div', null, 
           ['h1', null, SELF.name],

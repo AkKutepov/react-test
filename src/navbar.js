@@ -111,7 +111,7 @@ console.log('Navbar render')
 
     var loc = '/' + window.location.href.split('/').at(-1)
 
-    return Lib.elem(
+    return Lib.reactelem(
       [ReactRouterDOM.HashRouter, null,
           ['div', { className:"container-fluid" },
           ['nav', { className:"navbar navbar-expand-sm navbar-light", style:{backgroundColor:'#e3f2fd'}, ref:elem => { M.data.div = elem } },

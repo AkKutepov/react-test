@@ -26,7 +26,7 @@ export default class extends React.Component {
   render() {
 console.log(this.name + ' render')
 
-    return Lib.elem(
+    return Lib.reactelem(
       ['div', null, 
         ['h1', null, SELF.name],
         ['p', null, 'This is ' + SELF.name.toLowerCase() + ' page'],

@@ -401,7 +401,7 @@ class weather extends React.Component {
   render() {
 console.log('com Weather render')
 
-    return Lib.elem(
+    return Lib.reactelem(
 ['div', { ref:elem => { OBJ.div = elem } },
   
   ['div', { id:"my-weather-wrapper", }, 

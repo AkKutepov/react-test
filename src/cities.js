@@ -165,7 +165,7 @@ export default class extends React.Component {
   render() {
 console.log(this.name + ' render')
 
-    return Lib.elem(
+    return Lib.reactelem(
       ['div', { id: "my-cities-wrapper", ref:elem => { OBJ.div = elem } }, 
         ['h1', null, SELF.name],
         ['p', null, 'This is ' + SELF.name.toLowerCase() + ' page'],
