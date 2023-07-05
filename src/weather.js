@@ -322,78 +322,60 @@ class weather extends React.Component {
         
       function fn(i) {
       // get city weather
-        
-        fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=65d3d0a48fb24bcee34d1d3c38ff4d4c', { 
-          method: 'GET', 
-        })
-        // axios
-          // .get('https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=65d3d0a48fb24bcee34d1d3c38ff4d4c')
-          .then(response => {
-            if(response.ok) {
-              return response.json()
-            } 
-            else if(response.status === 404) {
-              throw alert('Error! Location not found. Try new location.') 
-            } 
-            else {
-              throw alert('Error! Status: ' + response.status) 
-            }
-          })
-          // .then(res => res.json())
-          .then(data => {
-// console.log(response)
+
+        var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=65d3d0a48fb24bcee34d1d3c38ff4d4c'
+        //
+        Lib.fetchReq(url, null, { method: 'GET', headers: null })
+        .then(res => getData(res))
+
+        function getData(data) {
+          // console.log(response)
    
-            w_data[i++] = data
-            //
-            if(w_data[i - 1].local_name && w_data[i - 1].local_name.en) {
-              w_data[i - 1].name = w_data[i - 1].local_name.en
-            }
-            //
-            if(i == cities.length) {
-              SELF.setState({ data_ViewVisible: 1, })
+          w_data[i++] = data
+          //
+          if(w_data[i - 1].local_name && w_data[i - 1].local_name.en) {
+            w_data[i - 1].name = w_data[i - 1].local_name.en
+          }
+          //
+          if(i == cities.length) {
+            SELF.setState({ data_ViewVisible: 1, })
+            
+            // weather data
+            if(cities.length != 1 || (SELF.state.data_W.length == 1 && 
+                (SELF.state.data_W[0].name == w_data[0].name && 
+                SELF.state.data_W[0].sys.country == w_data[0].sys.country))) {
               
-              // weather data
-              if(cities.length != 1 || (SELF.state.data_W.length == 1 && 
-                  (SELF.state.data_W[0].name == w_data[0].name && 
-                  SELF.state.data_W[0].sys.country == w_data[0].sys.country))) {
+                SELF.setState({ data_W: w_data, }) // replace
+            }
+            else {
+              // find doubles
+              if(!~(SELF.state.data_W.findIndex(item => {
+                // console.log(item, SELF.state.data_W, w_data)          
+                var name = item.name,
+                    country = item.sys.country,
+                    new_name = w_data[0].name,
+                    new_country = w_data[0].sys.country
                 
-                  SELF.setState({ data_W: w_data, }) // replace
+                if(name == new_name && country == new_country) {
+                  return 1;
+                }
+              }))) {
+              // not found
+                
+                var ar = SELF.state.data_W
+                SELF.setState({ data_W: ar.concat(w_data) }) // add
               }
               else {
-                // find doubles
-                if(!~(SELF.state.data_W.findIndex(item => {
-// console.log(item, SELF.state.data_W, w_data)          
-                  var name = item.name,
-                      country = item.sys.country,
-                      new_name = w_data[0].name,
-                      new_country = w_data[0].sys.country
-                  
-                  if(name == new_name && country == new_country) {
-                    return 1;
-                  }
-                }))) {
-                // not found
-                  
-                  var ar = SELF.state.data_W
-                  SELF.setState({ data_W: ar.concat(w_data) }) // add
-                }
-                else {
-                // found
-                
-                  alert("Already on the list.")
-                  return
-                }
-              }
+              // found
               
+                alert("Already on the list.")
+                return
+              }
             }
-            else fn(i)
-          })
-          .catch((error) => {
-            // if(error.message == 'Request failed with status code 404') {
-              // alert('Error! Location not found. Try new location.')
-            // }
-            // else alert(error.message)  
-          })
+            
+          }
+          else fn(i)
+        }
       }
     },
   }
