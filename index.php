@@ -22,12 +22,12 @@
   <body>
     <div id='root'></div>
 
-    <!--+->
+    <!---->
     <script src="./dist/weather.js"></script>
     <script src="./dist/bundle.js"></script>
     <!---->
 
-    <!---->
+    <!--+->
     <script type='module'>
       import "./src/guest/weather.js"
       import "./src/main.js"

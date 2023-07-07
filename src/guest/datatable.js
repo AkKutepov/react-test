@@ -26,7 +26,7 @@ export default class extends React.Component {
 
     // hdata, data
     this.state.AR.hdata = { ready: 0, }
-    this.state.AR.data = localStorage.getItem('dataTableState') || ''
+    this.state.AR.data = localStorage.getItem('trDataTableState') || ''
     
     if(this.state.AR.data) { 
       this.state.AR.data = JSON.parse(this.state.AR.data)
@@ -71,7 +71,7 @@ export default class extends React.Component {
       [this.state.AR.columns[0], this.state.AR.columns[1]] = [this.state.AR.columns[1], this.state.AR.columns[0]]
     },
     saveData() {
-      localStorage.setItem('dataTableState', JSON.stringify(this.state.AR.data))
+      localStorage.setItem('trDataTableState', JSON.stringify(this.state.AR.data))
     },
 
     async getOnClick() {
@@ -112,7 +112,7 @@ export default class extends React.Component {
     clearOnClick() {
       this.state.AR.hdata.ready = 0
       this.setState({ AR:this.state.AR })
-      localStorage.removeItem('dataTableState')
+      localStorage.removeItem('trDataTableState')
     },
 
     async headOnClick() {
