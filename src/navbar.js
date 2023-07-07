@@ -161,16 +161,19 @@ console.log('Navbar render')
     margin:0;
     padding:0;
     overflow-y:scroll;
-  }  
+  }
   body::-webkit-scrollbar {
     width: 12px;
-    background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(245,245,245,1)), to(#cfcab9));
-    -webkit-border-radius:6px;
+  }
+  body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
   }
   body::-webkit-scrollbar-thumb {
-    background:-webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(245,245,245,1)), to(#7f7a6a));
-    -webkit-border-radius:6px;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
   }
+
   .container-fluid {
     padding-left: 0;
     padding-right: 0;

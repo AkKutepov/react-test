@@ -1,9 +1,10 @@
 import { Lib } from "./lib.js"
-import weatherWrapper from "./guest/weather-wrapper.js"
 import share from "./guest/share.js"
-import timers from "./guest/timers.js"
 import cities from "./guest/cities.js"
+import datatable from "./guest/datatable.js"
 import paginators from "./guest/paginators.js"
+import timers from "./guest/timers.js"
+import weatherWrapper from "./guest/weather-wrapper.js"
 
 // routes
 export const routes = [
