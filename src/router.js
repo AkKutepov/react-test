@@ -1,9 +1,9 @@
 import { Lib } from "./lib.js"
-import weatherWrapper from "./weather-wrapper.js"
-import share from "./share.js"
-import timers from "./timers.js"
-import cities from "./cities.js"
-import paginators from "./paginators.js"
+import weatherWrapper from "./guest/weather-wrapper.js"
+import share from "./guest/share.js"
+import timers from "./guest/timers.js"
+import cities from "./guest/cities.js"
+import paginators from "./guest/paginators.js"
 
 // routes
 export const routes = [
@@ -12,7 +12,8 @@ export const routes = [
   { name: 'Cities', path: '/cities', component: cities },
   { name: 'Paginators', path: '/paginators', component: paginators, },
   { name: 'Dropdown', path: '/dropdown' },
-  { name: 'Action',  path: '/', exact: true, component: share, child: 1, },
+  { name: 'Datatable', path: '/dropdown/datatable', component: datatable, child: 1, },
+  { name: 'Nothing',  path: '/dropdown/nothing', component: share, child: 1, },
 ]
 
 export const service = {

@@ -29,7 +29,7 @@
 
     <!---->
     <script type='module'>
-      import "./src/weather.js"
+      import "./src/guest/weather.js"
       import "./src/main.js"
     </script>
     <!---->

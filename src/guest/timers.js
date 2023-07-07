@@ -1,4 +1,4 @@
-import { Lib } from './lib.js'
+import { Lib } from '../lib.js'
 
 var SELF, M, OBJ = {}
 export default class extends React.Component {

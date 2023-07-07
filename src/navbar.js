@@ -114,9 +114,9 @@ console.log('Navbar render')
     return Lib.reactelem(
       [ReactRouterDOM.HashRouter, null,
           ['div', { className:"container-fluid" },
-          ['nav', { className:"navbar navbar-expand-sm navbar-light", style:{backgroundColor:'#e3f2fd'}, ref:elem => { M.data.div = elem } },
-            ['a', { className:"navbar-brand", href:"#", onClick:() => {}, style:{cursor:'default'} },
-              'Nav'
+          ['nav', { className:"navbar navbar-expand-sm navbar-light", style:{ backgroundColor:'#e3f2fd' }, ref:elem => { M.data.div = elem } },
+            ['a', { className:"navbar-brand", href:"#", onClick:() => {}, style:{ cursor:'default' }},
+              ['img', { alt:"logo", src:"/test/img/favicon.png", height:"40" }]
             ],
             ['button', { className:"navbar-toggler", type:"button", onClick:(e) => M.f_menu_onclick(e) },
               ['span', { className:"navbar-toggler-icon" }, '']
@@ -178,11 +178,18 @@ console.log('Navbar render')
   }
   
   .navbar {
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    user-select: none;
   }
+  .navbar-brand {
+    cursor: default;
+    margin-right: 0.5rem;
+    margin-bottom: 0.2rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .navbar > button:focus {
     outline: 1px solid var(--orange);
   }

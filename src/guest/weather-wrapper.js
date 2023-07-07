@@ -1,4 +1,5 @@
-import { Lib } from "./lib.js"
+import { Lib } from "../lib.js"
+// import "./weather.js"
 
 var SELF, M
 export default class extends React.Component {
@@ -28,8 +29,10 @@ console.log(this.name + ' render')
     return Lib.reactelem(
       ['div', null, 
         ['h1', null, SELF.name],
-        ['p', null, 'This is ' + SELF.name.toLowerCase() + ' page']
-      ]
+        ['p', null, 'This is ' + SELF.name.toLowerCase() + ' page'],
+        
+        ['com-weather', null, ""]
+      ],
     )
   }
 

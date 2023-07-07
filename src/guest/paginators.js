@@ -1,4 +1,4 @@
-import { Lib } from "./lib.js"
+import { Lib } from "../lib.js"
 var Fragment = React.Fragment
 
 var SELF, M, AR = {}
