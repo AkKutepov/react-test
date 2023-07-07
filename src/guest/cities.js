@@ -201,6 +201,9 @@ console.log(this.name + ' render')
   #my-cities-wrapper {
     padding:0 2rem;
   }
+  #my-cities-wrapper p {
+    margin-bottom: 0;
+  }
   #my-cities-wrapper textarea {
     background: rgb(250 250 250 / 1);
     border: 0 none white;
