@@ -33,6 +33,7 @@ export default class extends React.Component {
         element.addEventListener(event, handler, false)
       }
     }
+
     M.init()
   }
     
@@ -40,22 +41,22 @@ export default class extends React.Component {
     
     init() {
       var text = OBJ.input
+      
       function resize () {
-        OBJ.input.style.height = 'auto'
-        OBJ.input.style.height = OBJ.input.scrollHeight + 'px'
+        text.style.height = 'auto'
+        text.style.height = text.scrollHeight + 'px'
       }
       /* 0-timeout to get the already changed text */
-      function delayedResize () {
-        window.setTimeout(resize, 0)
+      function delayedResize() {
+        setTimeout(resize, 0)
       }
-      SELF.observe(text, 'change',  resize)
-      SELF.observe(text, 'cut',     delayedResize)
-      SELF.observe(text, 'paste',   delayedResize)
-      SELF.observe(text, 'drop',    delayedResize)
-      SELF.observe(text, 'keydown', delayedResize)
+
+      Lib.listenon(text, 'change',  resize)
+      Lib.addListeners(text, ['cut', 'paste', 'drop', 'keydown'], delayedResize)
+
       // text.focus()
       // text.select()
-      resize()
+      delayedResize()
     },
     
     //
