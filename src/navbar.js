@@ -9,12 +9,13 @@ var SELF, M
 export class Navbar extends React.Component {
   constructor(props) {
     super(props)
+
     SELF = this
     M = SELF.methods
     M.data = {}
     M.data.menus = service.f_menus(routes) 
-    M.data.routes = service.f_routes(routes).v
-    
+    M.data.routes = service.f_routes(routes)
+
     // send components name
     Lib.bus.on('Com:constructor', path => {
       var i
@@ -47,16 +48,10 @@ export class Navbar extends React.Component {
         M.f_collapse_all(elem)
       }
     },
-    f_menuitem_onclick(event, path) {
-      M.f_collapse_all()
-    },
-    f_menusubitem_onclick() {
-      M.f_collapse_all()
-    },
     f_highlight_current(path) {
-      var path_folder = path.substring(0, path.lastIndexOf('/')),
-          i, elem_path, elems = M.data.div.querySelectorAll('.nav-link')
-      
+      var path_folder = path.substring(0, path.lastIndexOf('/'))
+      , i, elem_path, elems = M.data.div.querySelectorAll('.nav-link')
+          
       M.f_unhightlight_all()
       //
       for(i = elems.length; i--;) {
@@ -125,7 +120,7 @@ console.log('Navbar render')
               ['ul', { className:"navbar-nav me-auto mb-2 mb-lg-0" },              
               ].concat(M.data.menus.map(obj => 
                 !obj.data.length
-                ? ['li', null, [Link, { className:loc == obj.item.path ? "nav-link nav-link-active" : "nav-link", onClick:(e) => M.f_menuitem_onclick(e, obj.item.path), to: obj.item.path }, obj.item.name]]
+                ? ['li', null, [Link, { className:"nav-link", to: obj.item.path, onClick:(e) => M.f_collapse_all(e) }, obj.item.name]]
                 : ['li', { className:"nav-item dropdown" },
                   ['a', { className:"nav-link dropdown-toggle", 'data-href':obj.item.path, onClick:(e) => M.f_dropdown_onclick(e, 0), style:{cursor:'pointer'} }, 
                     obj.item.name
@@ -137,7 +132,7 @@ console.log('Navbar render')
                       if(subobj.separated) ar[i++] = 
                       ['div', { className:"dropdown-divider"}, '']
                       ar[i++] = ['li', { className:"dropdown-item" }, 
-                        [Link, { className:loc == subobj.path ? "nav-link nav-link-active" : "nav-link", to: (obj.item.path + subobj.path), onClick:(e) => M.f_menusubitem_onclick(e, subobj.path) }, subobj.name]
+                        [Link, { className:"nav-link", to: (subobj.path), onClick:(e) => M.f_collapse_all(e) }, subobj.name]
                       ]
                       return ar
                     }))
@@ -212,7 +207,7 @@ console.log('Navbar render')
     max-height: 0;
     overflow: hidden;
     padding: 0;
-    transition: max-height .75s linear, padding .25s linear .5s, margin-bottom .25s linear .5s;
+    transition: max-height .75s linear, padding .25s linear .25s, margin-bottom .5s linear .5s;
   }
   #navbarSupportedContent .dropdown-menu.expand {
     max-height: 700px;

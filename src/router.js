@@ -33,24 +33,10 @@ export const service = {
     return res;
   },
   
-  f_routes: function (routes) {
-    var path, last_path = '', disp = Lib.sort(1)
-
-    for(var i = 0, ii = routes.length; i < ii; i++){
-
-      if(!routes[i].child) {
-        last_path = ''
-      }
-      path = last_path + routes[i].path
-
-      if(routes[i].component) {
-        if(!disp.find(path)) {
-          disp.add(path, { name:routes[i].name, path, exact:routes[i].exact, component:routes[i].component })
-        }
-      }
-      else last_path = routes[i].path
-      
-    }
-    return disp
-  },
+  f_routes: (routes) => routes.map(item => {
+      // if(item.component && item.component != paginators) { // paginators - async
+      //   item.component = { ...item.component, props:{ name: item.name }}
+      // }
+      return item
+  })
 }
