@@ -93,7 +93,7 @@ class weather extends React.Component {
         if(s.length > 2) {
           // s = s.split(',').map(item => item.trim()).join(',')
           s = s.toLowerCase()      
-          M.getWeather([s])        
+          M.getWeather([s], 1)        
           elem.select()
         }
       }
@@ -116,7 +116,7 @@ class weather extends React.Component {
       localStorage.setItem('trWeather', JSON.stringify(ar));
     },
     
-    winOnMouseup(event) {
+    winOnMouseup() {
       var elem, elems, index_old = OBJ.cityMovedIndex, index
         
       if(elem = OBJ.cityMoved) {
@@ -163,16 +163,8 @@ class weather extends React.Component {
         // get index of city
         OBJ.cityMovedIndex = M.getIndex(elem)
         
-        var boundsC = target.getBoundingClientRect(),
-            boundsP = target.parentNode.getBoundingClientRect()
-            
-        if(event.type == 'touchstart') {
-          var touch = event.touches[0] || event.changedTouches[0];
-          OBJ.offsetY = boundsC.height * 3 / 4 + (boundsC.y - boundsP.y)
-        }
-        else if(event.type == 'mousedown') {
-          OBJ.offsetY = event.nativeEvent.offsetY + (boundsC.y - boundsP.y)
-        }
+        var boundsP = target.parentNode.getBoundingClientRect()
+        OBJ.offsetY = boundsP.height / 2
       }
       else if(target.dataset.name == 'bin' || target.parentNode.dataset.name == 'bin') {
         var i, elem = target.closest('.city'),
@@ -190,7 +182,7 @@ class weather extends React.Component {
             SELF.setState({ data_W: ar })
             
             if(i < SELF.state.data_W.length) {
-              var transition = window.getComputedStyle(elem).getPropertyValue('transition')
+              var transition = getComputedStyle(elem).getPropertyValue('transition')
               elem.style.transition = 'none'
               elem.style.opacity = 1
               elem.style.transition = transition
@@ -214,15 +206,10 @@ class weather extends React.Component {
           mouse.y = event.pageY - OBJ.bounds.top - document.documentElement.scrollTop
         }
                 
-        var elem_array = [...elems],
-            cur_index = elem_array.findIndex(item => item == elem)
-// console.log(mouse.y, OBJ.offsetY, elem.offsetHeight)      
-
         if(mouse.y - OBJ.offsetY + elem.offsetHeight < OBJ.bounds.height &&
           mouse.y - OBJ.offsetY > 0) {
           
-          var top = mouse.y - OBJ.offsetY,
-            cur = OBJ.cityMoved,
+          var cur = OBJ.cityMoved,
             prev = cur.previousElementSibling,
             next = cur.nextElementSibling;
           
@@ -310,44 +297,46 @@ class weather extends React.Component {
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     
-    getWeather(cities) {
+    getWeather(cities, once) {
       var w_data = []
       
       if(OBJ.refreshTimeout) clearTimeout(OBJ.refreshTimeout)
-      OBJ.refreshTimeout = setTimeout(() => {
-        M.refreshData()
-      }, 30 * 60 * 1000) // 30 min
+      OBJ.refreshTimeout = setTimeout(() => { M.refreshData() }, 30 * 60 * 1000) // 30 min
       
+      // start
       if(cities.length) fn(0)
         
-      function fn(i) {
       // get city weather
+      function fn(i) {
 
         var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=65d3d0a48fb24bcee34d1d3c38ff4d4c'
+        // var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=c71fd58fb1cd339ac9c1d8d5237ef3da'
         //
-        Lib.fetchReq(url, null, { method: 'GET', headers: null })
+        fetch(url, { method: 'GET' })
+        .then(res => { return res.ok ? res.json() : Promise.reject('Error: ' + res.status || res.statusText) })
         .then(res => getData(res))
+        .catch(err => { if(err == 'Error: 404') alert('Not Found'); else console.log(err)})
 
         function getData(data) {
           // console.log(response)
    
-          w_data[i++] = data
+          w_data[i] = data
           //
-          if(w_data[i - 1].local_name && w_data[i - 1].local_name.en) {
-            w_data[i - 1].name = w_data[i - 1].local_name.en
+          if(w_data[i].local_name && w_data[i].local_name.en) {
+            w_data[i].name = w_data[i].local_name.en
           }
           //
-          if(i == cities.length) {
+          if(++i == cities.length) {
             SELF.setState({ data_ViewVisible: 1, })
             
             // weather data
-            if(cities.length != 1 || (SELF.state.data_W.length == 1 && 
-                (SELF.state.data_W[0].name == w_data[0].name && 
-                SELF.state.data_W[0].sys.country == w_data[0].sys.country))) {
-              
+            if(!once) {
+            // end of adding
                 SELF.setState({ data_W: w_data, }) // replace
             }
             else {
+            // adding one city
+
               // find doubles
               if(!~(SELF.state.data_W.findIndex(item => {
                 // console.log(item, SELF.state.data_W, w_data)          
@@ -463,7 +452,7 @@ console.log('com Weather render')
       ['div', { className:"card-body text-dark" },
 
         SELF.state.data_W.length ?
-        ['div', { className:"city-container",
+        ['div', { className:"city-container transition",
             onMouseDown: M.cityOnMousedown, 
             onMouseMove: M.cityOnMousemove,
             onTouchStart: M.cityOnMousedown, 
@@ -643,17 +632,15 @@ console.log('com Weather render')
   }
   #my-weather-wrapper .city-container {
     position:relative;
-    transition:max-height .25s linear .25s;
-    
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
+    user-select: none;
   }
+  #my-weather-wrapper .city-container.transition {
+    transition:max-height .25s linear .25s;
+  }
+
   #my-weather-wrapper .city {
     background:rgb(240 240 240 / 1);
     border-radius:.2rem;
-    /* box-sizing: border-box; */
     display:flex;
     justify-content: space-between;
     align-items: center;
