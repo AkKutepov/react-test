@@ -1,2 +1,2 @@
 // require('../css/main.css')
-require('../src/weather.js')
+require('../src/guest/weather.js')
