@@ -207,7 +207,7 @@ class weather extends React.Component {
         }
                 
         if(mouse.y - OBJ.offsetY + elem.offsetHeight < OBJ.bounds.height &&
-          mouse.y - OBJ.offsetY > 0) {
+          mouse.y - OBJ.offsetY + 1 > 0) {
           
           var cur = OBJ.cityMoved,
             prev = cur.previousElementSibling,
