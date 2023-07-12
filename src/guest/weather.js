@@ -123,7 +123,6 @@ class weather extends React.Component {
         index = M.getIndex(elem)
         elem.style.zIndex = 'inherit'
         elem.style.opacity = 1
-        OBJ.cityMoved.style.cursor = 'pointer';
         OBJ.cityMoved = null
         M.orderCities()
         
